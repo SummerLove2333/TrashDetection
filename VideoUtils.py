@@ -142,6 +142,21 @@ def catch_video(name, video_index):
     cap.release()
     cv2.destroyAllWindows()
 
+def getFrameImgs(videoPath):
+    cap = cv2.VideoCapture(videoPath)
+    if not cap.isOpened():
+        # 如果没有检测到摄像头，报错
+        raise Exception('Check if the camera is on.')
+    count = 0
+    while True:
+        ret, frame = cap.read()
+        count += 1
+        if not ret:
+            break
+        if ret and count % 100==0:
+            cv2.imwrite("F:\\TrashImg\\"+str(count)+".jpg",frame)
+            print("img "+str(count)+" is saved.")
+
 if __name__ == '__main__':
-    path = "G:\\2999_巴黎婚纱摄影门前_1_1602822556_952D7CCE\\2999_巴黎婚纱摄影门前_1_1FA99388_1602822556_1.mp4"
-    getFrameDiff(path)
+    path = "E:\\test.mp4"
+    getFrameImgs(path)
